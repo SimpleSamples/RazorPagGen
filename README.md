@@ -1,7 +1,5 @@
 # RazorPagGen
 
-**Under construction!**
-
 This is a simple .Net Core program that can generate a Razor page my way.
 
 I do not understand how the dotnet new page command works for creating a new Razor page.
