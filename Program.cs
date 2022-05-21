@@ -1,13 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using static System.Environment;
-
-//var page = new RazorPage
-//{
-//    ProjectDir = @"G:\Sam\Projects",
-//    ProjectNs = "sswa",
-//    ProjectArea = "MFC",
-//    ProjectMdl = "CListCtrl"
-//};
 
 const string AppSettingsFn = "AppSettings.json";
 const string CshtmlFn = "cshtml.txt";
@@ -146,6 +139,7 @@ void GenerateTo(RazorPage page)
         fn = page.ProjectDir + "\\Areas\\" + page.ProjectArea + "\\Pages" + '\\' + page.ProjectMdl + ".cshtml";
         using (StreamWriter sw = new StreamWriter(fn))
         {
+            Replace(ref text, page);
             sw.Write(text);
         }
     }
@@ -172,6 +166,7 @@ void GenerateTo(RazorPage page)
         fn = page.ProjectDir + "\\Areas\\" + page.ProjectArea + "\\Pages" + '\\' + page.ProjectMdl + ".cshtml.cs";
         using (StreamWriter sw = new StreamWriter(fn))
         {
+            Replace(ref text, page);
             sw.Write(text);
         }
     }
@@ -179,6 +174,15 @@ void GenerateTo(RazorPage page)
     {
         Console.WriteLine($"Exception writing {fn}: {ex.Message}");
     }
+}
+
+void Replace(ref string text, RazorPage page)
+{
+    StringBuilder sb = new StringBuilder(text);
+    sb.Replace("|A|", page.ProjectArea);
+    sb.Replace("|N|", page.ProjectNs);
+    sb.Replace("|M|", page.ProjectMdl);
+    text = sb.ToString();
 }
 
 void Save()
